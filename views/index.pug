@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  .container
+    header.header
+      h1 This is my Portfolio
+
+    section.projects
+      h2 My Projects
+      .project-list
+        each project in projects
+          .project-card
+            img(src=project.imageUrl, alt=project.title)
+            .project-content
+              h3= project.title
+              p= project.description
+              a(href=project.projectUrl, target="_blank").btn View Project
+
+    section.blogs
+      h2 My Blog Posts
+      .blog-list
+        each blog in blogPosts
+          .blog-card
+            h3= blog.title
+            p= blog.content
+            p.author= `By: ${blog.author}`

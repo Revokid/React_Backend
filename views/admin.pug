@@ -1,0 +1,67 @@
+extends layout
+
+block content
+  .admin-dashboard
+    h1 Admin Dashboard
+    p Welcome to your admin panel. Manage projects and blog posts easily.
+
+    .admin-container
+      aside.admin-sidebar
+        nav
+          ul
+            li: a(href="#add-project") Add Project
+            li: a(href="#add-blog") Add Blog Post
+            li: a(href="#projects-list") Manage Projects
+            li: a(href="#blogs-list") Manage Blog Posts
+
+      .admin-main
+        section#add-project.card
+          h2 Add a New Project
+          form(action="/admin/add-project", method="POST")
+            .form-group
+              label(for="title") Project Title:
+              input(type="text", name="title", required)
+            .form-group
+              label(for="description") Description:
+              textarea(name="description", required)
+            .form-group
+              label(for="imageUrl") Image URL:
+              input(type="text", name="imageUrl", required)
+            .form-group
+              label(for="projectUrl") Project URL:
+              input(type="text", name="projectUrl", required)
+            button(type="submit").btn-primary Add Project
+
+        section#add-blog.card
+          h2 Add a New Blog Post
+          form(action="/admin/add-blog", method="POST")
+            .form-group
+              label(for="title") Blog Title:
+              input(type="text", name="title", required)
+            .form-group
+              label(for="content") Content:
+              textarea(name="content", required)
+            .form-group
+              label(for="author") Author Name:
+              input(type="text", name="author", required)
+            button(type="submit").btn-primary Add Blog Post
+
+        section#projects-list.card
+          h2 Manage Projects
+          .project-list
+            each project in projects
+              .project-item
+                h3= project.title
+                p= project.description
+                form(action=`/admin/delete-project/${project._id}`, method="POST")
+                  button(type="submit").btn-danger Delete
+
+        section#blogs-list.card
+          h2 Manage Blog Posts
+          .blog-list
+            each blog in blogPosts
+              .blog-item
+                h3= blog.title
+                p By: #{blog.author}
+                form(action=`/admin/delete-blog/${blog._id}`, method="POST")
+                  button(type="submit").btn-danger Delete
